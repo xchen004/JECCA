@@ -9,4 +9,9 @@ JECCA(da,metadata,ncomp=NULL)
 |-------------|-------------------------------------------------------------------------------------------------------------------|
 | da          | gene expression matrix of combined multiple datasets. Each column represents a sample, each row represents a gene.|
 | metadata    | meta file with first column of sample id matched with column names of gene expression matrix and the second column indicating the dataset information for each sample.|
-| ncomp       | total number of JECCA embeddings need to be returned. The number of embeddings should not exceed the minimum number of samples of the multiple datasets|
+| ncomp       | total number of JECCA embeddings need to be returned. The number of embeddings should not exceed the minimum number of samples of the multiple datasets.|
+
+#### Value
+| Value       | Description                                                                                                       |
+|-------------|-------------------------------------------------------------------------------------------------------------------|
+| res         | JECCA derived embeddings|
