@@ -15,3 +15,16 @@ JECCA(da,metadata,ncomp=NULL)
 | Value       | Description                                                                                                       |
 |-------------|-------------------------------------------------------------------------------------------------------------------|
 | res         | JECCA derived embeddings|
+
+
+### ```JECCA_pathway```
+JECCA_pathway(da,metadata,embedding,pathway_database,output)
+#### Arguments
+
+| Arguments   | Description                                                                                                       |
+|-------------|-------------------------------------------------------------------------------------------------------------------|
+| da          | gene expression matrix of combined multiple datasets. Each column represents a sample, each row represents a gene.|
+| metadata    | meta file with first column of sample id matched with column names of gene expression matrix and the second column indicating the dataset information for each sample.|
+| embedding   | JECCA output embeddings.|
+| pathway_database   | The pathway database need to be selected for the GSEA pathways analysis. The following pathway databases are provided: ReactomPA, KEGG, GOALL, GOBP, GOMF, GOALL. User can select any combinations of the above databases to perform GSEA pathway analysis. fgsea function is used to perform reactomPA GSEA analysis. gseKEGG and gseGO function is used to perform KEGG and GO GSEA analysis.|
+| output      | The output directory. The function will generate following results in the output directory: subtype expression based on the da matrix and embedding, GSEA pathway results.|
