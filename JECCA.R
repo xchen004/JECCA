@@ -4,10 +4,10 @@ JECCA <- function(da,metadata,ncomp=NULL)
   #
   # Args:
   #   da:       gene expression matrix of combined multiple datasets.
-  #             Each column represents a sample, each row represents a gene..
+  #             Each column represents a sample, each row represents a gene.
   #   metadata: meta file with first column of sample id matched with 
-  #             the samples in gene expression matrix and the second 
-  #             column indicating the dataset information for each sample.
+  #             column names of gene expression matrix and the second column 
+  #             indicating the dataset information for each sample.
   #   ncomp:    total number of JECCA embeddings need to be returned
   #             The number of embeddings should not exceed the minimum number
   #             of samples of the multiple datasets.
