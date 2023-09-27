@@ -3,8 +3,8 @@ JECCA <- function(da,metadata,ncomp=NULL)
   # This function perform CCA analysis for multiple datasets
   #
   # Args:
-  #   da:       gene expression matrix of combined multiple datasets
-  #             the columns are samples, rows are gene measurements.
+  #   da:       gene expression matrix of combined multiple datasets.
+  #             Each column represents a sample, each row represents a gene..
   #   metadata: meta file with first column of sample id matched with 
   #             the samples in gene expression matrix and the second 
   #             column indicating the dataset information for each sample.
