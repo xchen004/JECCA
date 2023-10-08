@@ -1,5 +1,5 @@
 # Joint Embedding Canonical Correlation Analysis
-JECCA is a method to extract shared information across multiple data sets. The main function is JECCA.R, which can be used by source('JECCA.R'). JECCA_pathway is a function to perform pathway analysis. The script folder includes all codes of the applications of JECCA to three case studies (Breast Cancer, IBD, and RA). The data folder includes all data sets for the three case studies.
+JECCA is a method to extract shared information across multiple data sets. The main function is JECCA.R, which can be used by source('JECCA.R'). JECCA_pathway is a function to perform pathway analysis. The script folder includes all codes of the applications of JECCA to three case studies (Breast Cancer, IBD, and RA). The result folder includes all data sets and analysis output for the four case studies.
 ## Description
 ### ```JECCA```
 JECCA(da,metadata,ncomp=NULL)
