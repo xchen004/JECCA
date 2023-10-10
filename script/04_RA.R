@@ -1,3 +1,10 @@
+module load hdf5
+module load gcc/10.2.0
+module load zlib
+export PATH=$PATH:/projects/abv/DSS/xchen/app/R/R-4.3.0/bin/
+#export PATH=$PATH:/sc/wo/home/chenxx25/app/R/R-4.1.2/bin/
+R
+
 
 library(plyr)
 library(dplyr)
@@ -71,12 +78,30 @@ out <- JECCA(as.matrix(da),meta,ncomp=20)
 saveRDS(out, file=paste0(input,'embedding.rds'))
 
 
+## t-test between R/NR and CCA1-10 ##
+
+da_embedding_all <- readRDS(paste0(input,'embedding.rds'))
+meta <- read.csv(paste0(input,'anno_hg.csv'),row.names = 1)
+da <- da_embedding_all[rownames(meta),]
+da <- cbind.data.frame(da, Group=meta$Group)
+da$Group <- factor(da$Group, levels = c('R','NR'))
+t_summary <- c()
+for(i in 1:(ncol(da)-1))
+{
+  temp <- t.test(da[,i] ~ da$Group)
+  temp2 <- c(temp$statistic, temp$p.value, temp$estimate)
+  t_summary <- rbind.data.frame(t_summary, temp2)
+}
+rownames(t_summary) <- paste0('JECCA_',1:nrow(t_summary))
+colnames(t_summary) <- c('tstat', 'pvalue', 'R_mean', 'NR_mean')
+write.csv(t_summary, file=paste0(input,'t_summary.csv'))
+
+
 #############################
 ## classification analysis ##
 #############################
 
 library(precrec)
-rownames(meta) <- meta$sid
 ds <- names(table(meta$DataSet))
 test_geo <- ds
 da <- readRDS(paste0(input,'embedding.rds'))
@@ -92,7 +117,7 @@ for(i in 1:length(test_geo))
   da_train2 <- cbind.data.frame(Group=factor(meta_train$Group), da_train[,1:5])
   da_test2 <- cbind.data.frame(Group=factor(meta_test$Group), da_test[,1:5])
   
-  set.seed(1234)
+  set.seed(123)
   train_ranger <- ranger::ranger(Group ~ ., data = da_train2, probability = TRUE)
   pred_ranger <- predict(train_ranger, da_test2)
   nr_prob <- pred_ranger$prediction[,1]
@@ -157,7 +182,7 @@ for(i in 1:length(test_geo))
   da_train2 <- cbind.data.frame(Group=factor(meta_train$Group), da_train[,1:5])
   da_test2 <- cbind.data.frame(Group=factor(meta_test$Group), da_test[,1:5])
   
-  set.seed(1234)
+  set.seed(123)
   train_ranger <- ranger::ranger(Group ~ ., data = da_train2, probability = TRUE)
   pred_ranger <- predict(train_ranger, da_test2)
   nr_prob <- pred_ranger$prediction[,1]
@@ -189,7 +214,7 @@ library(preprocessCore)
 meta <- read.csv(paste0(input,'anno_hg.csv'),row.names = 1)
 da_all <- read.csv(paste0(input,'exprs_hg.csv'),row.names=1,check.names = F)
 da_all <- as.matrix(da_all)
-GEOs <- GEOs[c(3,1,2,4,5,6)]
+GEOs <- GEOs[c(6,1:5)]
 meta2 <- meta[meta$DataSet %in% GEOs[1],]
 da_QN <- normalize.quantiles(da_all[,rownames(meta2)])
 rownames(da_QN) <- rownames(da_all)
@@ -238,7 +263,7 @@ for(i in 1:length(test_geo))
   da_train2 <- cbind.data.frame(Group=factor(meta_train$Group), da_train[,1:5])
   da_test2 <- cbind.data.frame(Group=factor(meta_test$Group), da_test[,1:5])
   
-  set.seed(1234)
+  set.seed(123)
   train_ranger <- ranger::ranger(Group ~ ., data = da_train2, probability = TRUE)
   pred_ranger <- predict(train_ranger, da_test2)
   nr_prob <- pred_ranger$prediction[,1]
